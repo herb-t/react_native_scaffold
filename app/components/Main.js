@@ -11,13 +11,12 @@ export default class Main extends Component {
 
     return (
       <View>
-        <Text>Main Navigation</Text>
+        <Text>Recent Recommendations</Text>
+        <Text>Game of Thrones</Text>
+        <Text>The Walking Dead</Text>
         <Button
-          title="Navigate (Tab Nav Demo)"
-          onPress={() => {navigation.navigate('TabGroupA')}} />
-        <Button
-          title="Navigate (Settings)"
-          onPress={() => {navigation.navigate('Settings')}} />
+          title="View By Category"
+          onPress={() => {navigation.navigate('Selections')}} />
       </View>
     );
   }

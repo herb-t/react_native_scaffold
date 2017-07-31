@@ -4,7 +4,7 @@ import { NavigationActions } from 'react-navigation';
 
 export default class Home extends Component {
   static navigationOptions = {
-    title: "Home Screen"
+    title: "Recommendations"
   };
 
   render() {
@@ -14,14 +14,10 @@ export default class Home extends Component {
 
     return (
       <View>
-        <Text>Welcome Home</Text>
-        <Button title="Goto (Main)" onPress={() => {navigation.navigate('Main')}} />
-        <Button title="Settings" onPress={() => {
-          dispatch(NavigationActions.navigate({
-            routeName: 'Settings',
-            params: {headless: true, title: "Settings!"}
-          }))
-        }} />
+        <Text>Recommended For You</Text>
+
+        <Button title="View Selected" onPress={() => {navigation.navigate('Main')}} />
+
       </View>
     );
   }
