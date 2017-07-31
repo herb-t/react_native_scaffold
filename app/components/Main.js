@@ -11,6 +11,7 @@ export default class Main extends Component {
 
     return (
       <View>
+        //TODO: Add images and swiping features here
         <Text>Recent Recommendations</Text>
         <Text>Game of Thrones</Text>
         <Text>The Walking Dead</Text>
