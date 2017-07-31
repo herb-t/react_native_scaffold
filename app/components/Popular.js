@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 
-export default class Tab3 extends Component {
+export default class Popular extends Component {
   static navigationOptions = {
-    title: "Tab3"
+    title: "Popular"
   };
 
   render() {
@@ -14,10 +14,12 @@ export default class Tab3 extends Component {
 
     return (
       <View>
-        <Text>Tab3 text</Text>
-        <Button title="Navigate" onPress={() => {}} />
-        <Button title="Settings" onPress={() => {
-          dispatch(NavigationActions.navigate({routeName: 'Settings'}))
+        <Text>Popular Movies and Shows</Text>
+        <Button title="Do Something" onPress={() => {
+          alert("Something has been done")
+        }} />
+        <Button title="Home" onPress={() => {
+          dispatch(NavigationActions.navigate({routeName: 'Home'}))
         }} />
       </View>
     );

@@ -1,27 +1,50 @@
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, StyleSheet } from 'react-native';
 import { NavigationActions } from 'react-navigation';
+import Card from './Card.js';
+import '../data.js';
+
+// Define Styles
+const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 60
+  },
+});
 
 export default class Home extends Component {
   static navigationOptions = {
-    title: "Home Screen"
+    title: "Swipe If You Like"
   };
 
+  constructor(props) {
+    // Add shows to data
+    super(props);
+    this.state = {
+      shows: Data.shows
+    };
+  }
+
   render() {
-    const
-      { navigation } = this.props,
-      { dispatch } = navigation;
+    const showCards = this.state.shows.map((data) =>
+      <Card
+        key={data.id}
+        name={data.name}
+        src={data.src}
+        style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', width: 350, height: 350, backgroundColor: '#eee'}}
+      />
+    );
+    const { navigation } = this.props;
+    const { dispatch } = navigation;
 
     return (
-      <View>
-        <Text>Welcome Home</Text>
-        <Button title="Goto (Main)" onPress={() => {navigation.navigate('Main')}} />
-        <Button title="Settings" onPress={() => {
-          dispatch(NavigationActions.navigate({
-            routeName: 'Settings',
-            params: {headless: true, title: "Settings!"}
-          }))
-        }} />
+      <View style={styles.wrapper}>
+        <View style={styles.wrapper}>{showCards}</View>
+        <View style={styles.button}>
+          <Button title="View Selected" onPress={() => {navigation.navigate('Main')}} />
+        </View>
       </View>
     );
   }

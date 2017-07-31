@@ -1,18 +1,12 @@
 import { Home, Main } from '../../components';
-import TabGroupANavigator from '../../navigators/TabGroupA';
-import SettingsNavigator from '../../navigators/Settings';
+import SelectionsNavigator from '../../navigators/Selections';
 
 export default {
   Home: {screen: Home},
   Main: {screen: Main},
-  TabGroupA: {
-    screen: TabGroupANavigator,
-    navigationOptions: {
-      headerVisible: false
-    }
-  },
-  Settings: {
-    screen: SettingsNavigator,
+
+  Selections: {
+    screen: SelectionsNavigator,
     navigationOptions: {
       headerVisible: false
     }

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
 
-export default class Tab2 extends Component {
+export default class Recommended extends Component {
   static navigationOptions = {
-    title: "Tab2"
+    title: "Recommended"
   };
 
   render() {
@@ -13,9 +13,8 @@ export default class Tab2 extends Component {
 
     return (
       <View>
-        <Text>Tab2 text</Text>
-        <Button title="Navigate" onPress={() => {}} />
-        <Button title="Back (Navigation.goBack)" onPress={() => {
+        <Text>Recommended Movies and Shows</Text>
+        <Button title="Back - goBack()" onPress={() => {
           goBack()
         }} />
       </View>
