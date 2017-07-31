@@ -3,7 +3,7 @@ import { View, Text, Button } from 'react-native';
 
 export default class Main extends Component {
   static navigationOptions = {
-    title: "Main"
+    title: "Selected Recommendations"
   };
 
   render() {
