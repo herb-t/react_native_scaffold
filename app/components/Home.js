@@ -15,7 +15,7 @@ export default class Home extends Component {
     return (
       <View>
         <Text>Recommended For You</Text>
-
+        // TODO: add Tinder for movies and shows here
         <Button title="View Selected" onPress={() => {navigation.navigate('Main')}} />
 
       </View>
