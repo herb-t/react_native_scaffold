@@ -7,7 +7,9 @@ export default StyleSheet.create({
     alignItems: 'center',
     width: 350,
     height: 350,
-    backgroundColor: '#efefef'
+    backgroundColor: '#fff',
+    borderRadius: 6,
+    elevation: 1
   },
   label: {
     fontSize: 24,

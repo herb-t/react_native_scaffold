@@ -125,7 +125,7 @@ export default class Card extends Component {
     let cardStyle = {transform: [{translateX}, {translateY}, {rotate}, {scale}]};
 
     return (
-      <Animated.View style={{...this.props.style, ...cardStyle}} {...this._panResponder.panHandlers}>
+      <Animated.View style={[card.layout, {...cardStyle}]} {...this._panResponder.panHandlers}>
         <Image source={this.props.src} />
         <Text style={card.label}>{this.props.name}</Text>
       </Animated.View>
