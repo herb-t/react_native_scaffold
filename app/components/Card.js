@@ -33,15 +33,14 @@ export default class Card extends Component {
     this.state = {
       pan: new Animated.ValueXY(),
       scale: new Animated.Value(1),
-      rotate: new Animated.Value(0)
+      rotate: new Animated.Value(0.5),
+      threshold: 120
     }
   }
 
   componentWillMount() {
     // Create pan responder to fire animations on
     // swipe left and right.
-    const threshold = 120;
-
     this._panResponder = PanResponder.create({
       onMoveShouldSetResponderCapture: () => true,
       onMoveShouldSetPanResponderCapture: () => true,
@@ -51,7 +50,7 @@ export default class Card extends Component {
         // set the delate to the states pan position.
         null, {dx: this.state.pan.x, dy: this.state.pan.y},
       ]),
-      onPanResponderRelease: (e, gestureState) => this.gaugeRelease_(gestureState, threshold)
+      onPanResponderRelease: (e, gestureState) => this.gaugeRelease_(gestureState)
     });
   }
 
@@ -62,13 +61,6 @@ export default class Card extends Component {
     Animated.spring(
       this.state.scale,
       { toValue: 1.1, friction: 3 }
-    ).start();
-    Animated.timing(
-      this.state.rotate,
-      {
-        toValue: 1,
-        duration: 500
-      }
     ).start();
   }
 
@@ -81,36 +73,31 @@ export default class Card extends Component {
     ).start();
     Animated.spring(
       this.state.pan,
-      { toValue: {x: x, y: y}, tension: 10 }
-    ).start();
-    Animated.timing(
-      this.state.rotate,
-      {
-        toValue: 0,
-        duration: 500
-      }
+      { toValue: {x: x, y: y}, tension: 15 }
     ).start();
   }
 
-  gaugeRelease_(pos, threshold) {
+  gaugeRelease_(pos) {
     // Gauge release movement threshold and animate accordingly.
-    if(pos.dx <= threshold && pos.dx >= -threshold) {
+    if(pos.dx <= this.state.threshold && pos.dx >= -this.state.threshold) {
       this.animateRelease_(0, 0);
-    } else if (pos.dx > threshold) {
+    } else if (pos.dx > this.state.threshold) {
       this.animateRelease_(500, 350);
-    } else if (pos.dx < -threshold) {
+    } else if (pos.dx < -this.state.threshold) {
       this.animateRelease_(-500, 350);
     }
   }
 
   render() {
     // Render card with animation styles and data hooked up.
-    const rotate = this.state.rotate.interpolate({
-      inputRange: [0, 1],
-      outputRange: ['0deg', '25deg']
-    });
-    let { pan, scale} = this.state;
+    let { pan, scale } = this.state;
     let [translateX, translateY] = [pan.x, pan.y];
+
+    const rotate = this.state.pan.x.interpolate({
+      inputRange: [-this.state.threshold, 0, this.state.threshold],
+      outputRange: ['-25deg', '0deg', '25deg']
+    });
+
     let imageStyle = {transform: [{translateX}, {translateY}, {rotate}, {scale}]};
 
     return (

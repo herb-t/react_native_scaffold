@@ -33,7 +33,7 @@ export default class Home extends Component {
         key={data.id}
         name={data.name}
         src={data.src}
-        style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', width: 350, height: 350, backgroundColor: '#eee'}}
+        style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', width: 350, height: 350, backgroundColor: '#efefef'}}
       />
     );
     const { navigation } = this.props;
