@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text, Button, StyleSheet, TouchableHighlight } from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  TouchableHighlight
+} from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import Card from './Card.js';
-import CustomButton from './CustomButton.js';
+import AwesomeButton from './AwesomeButton.js';
 import styles from '../styles/styles.js';
 import '../data.js';
 
@@ -44,7 +50,7 @@ export default class Home extends Component {
       />
     );
 
-    // Assign naviation and dispatch.
+    // Assign navigation and dispatch.
     const { navigation } = this.props;
     const { dispatch } = navigation;
 
@@ -53,7 +59,14 @@ export default class Home extends Component {
       <View style={styles.appWrapper}>
         <View style={styles.appWrapper}>{showCards}</View>
         <View>
-          <CustomButton text="View Selected" onPress={() => {navigation.navigate('Main')}} />
+          <AwesomeButton text="RESET" onPress={() => {
+            dispatch(NavigationActions.reset({
+              index: 0,
+              actions: [
+                NavigationActions.navigate({routeName: 'Home'})
+              ]
+            }))
+          }} />
         </View>
       </View>
     );

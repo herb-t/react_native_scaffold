@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import styles from '../styles/styles.js';
 
-export default class CustomButton extends Component {
+export default class AwesomeButton extends Component {
 
   constructor(props) {
     super(props);

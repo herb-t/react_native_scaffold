@@ -1,6 +1,5 @@
 'use strict';
 
-// Import React, React Native, React Native Modules.
 import React, { Component } from 'react';
 import {
   StyleSheet,

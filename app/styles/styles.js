@@ -15,7 +15,7 @@ export default StyleSheet.create({
     padding: 5
   },
   buttonText: {
-    fontSize: 16,
+    fontSize: 22,
     fontWeight: 'bold',
     color: COLOR_PRIMARY
   },
