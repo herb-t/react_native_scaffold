@@ -1,6 +1,6 @@
 'use strict';
 
-// Import React, React Native, React Native Modules and Data.
+// Import React, React Native, React Native Modules.
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -11,7 +11,6 @@ import {
   Animated,
   Easing
 } from 'react-native';
-import '../data.js';
 
 /**
  * Stylesheet for label on cards.
@@ -89,7 +88,7 @@ export default class Card extends Component {
    * @param  {!number} y Y position to animate to.
    */
   animateRelease_(x, y) {
-    // Flatten the offset to avoid erratic behavior
+    // Flatten the offset to avoid erratic behavior.
     this.state.pan.flattenOffset();
 
     // Fire spring animations for the scale and pan.
