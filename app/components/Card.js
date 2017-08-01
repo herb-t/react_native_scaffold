@@ -11,18 +11,7 @@ import {
   Animated,
   Easing
 } from 'react-native';
-
-/**
- * Stylesheet for label on cards.
- */
-const styles = StyleSheet.create({
-  label: {
-    fontSize: 25,
-    color: '#000',
-    textAlign: 'center',
-    marginTop: 25
-  }
-});
+import card from '../styles/card.js';
 
 /**
  * Card Class to pass data through and handle swipe gestures and animations.
@@ -138,7 +127,7 @@ export default class Card extends Component {
     return (
       <Animated.View style={{...this.props.style, ...cardStyle}} {...this._panResponder.panHandlers}>
         <Image source={this.props.src} />
-        <Text style={styles.label}>{this.props.name}</Text>
+        <Text style={card.label}>{this.props.name}</Text>
       </Animated.View>
     );
   }

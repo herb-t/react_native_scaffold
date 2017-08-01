@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet, TouchableHighlight } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import Card from './Card.js';
+import layout from '../styles/layout.js';
+import button from '../styles/button.js';
 import '../data.js';
 
-/**
- * Stylesheet for label on cards.
- */
-const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 60
-  },
-});
+class CustomButton extends Component {
+
+  render() {
+
+    return (
+      <TouchableHighlight underlayColor="rgba(255, 255, 255, 0)" activeOpacity={0.7} onPress={() => {this.props.onPress()}}>
+        <View style={button.layout}>
+          <Text style={button.text}>View Selected</Text>
+        </View>
+      </TouchableHighlight>
+    );
+  }
+};
 
 /**
  * Wrapper class to handle card component and display cards from data.
@@ -62,10 +66,10 @@ export default class Home extends Component {
 
     // Create wrapper view containing cards and navigation.
     return (
-      <View style={styles.wrapper}>
-        <View style={styles.wrapper}>{showCards}</View>
-        <View style={styles.button}>
-          <Button title="View Selected" onPress={() => {navigation.navigate('Main')}} />
+      <View style={layout.wrapper}>
+        <View style={layout.wrapper}>{showCards}</View>
+        <View>
+          <CustomButton onPress={() => {navigation.navigate('Main')}} />
         </View>
       </View>
     );
