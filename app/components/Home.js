@@ -3,14 +3,13 @@ import { View, Text, Button, StyleSheet, TouchableHighlight } from 'react-native
 import { NavigationActions } from 'react-navigation';
 import Card from './Card.js';
 import CustomButton from './CustomButton.js';
-import layout from '../styles/layout.js';
+import styles from '../styles/styles.js';
 import '../data.js';
 
 /**
  * Wrapper class to handle card component and display cards from data.
  */
 export default class Home extends Component {
-
   /**
    * Navigation Title
    * @type {Object}
@@ -51,8 +50,8 @@ export default class Home extends Component {
 
     // Create wrapper view containing cards and navigation.
     return (
-      <View style={layout.wrapper}>
-        <View style={layout.wrapper}>{showCards}</View>
+      <View style={styles.appWrapper}>
+        <View style={styles.appWrapper}>{showCards}</View>
         <View>
           <CustomButton text="View Selected" onPress={() => {navigation.navigate('Main')}} />
         </View>

@@ -11,7 +11,7 @@ import {
   Animated,
   Easing
 } from 'react-native';
-import card from '../styles/card.js';
+import styles from '../styles/styles.js';
 
 /**
  * Card Class to pass data through and handle swipe gestures and animations.
@@ -125,9 +125,9 @@ export default class Card extends Component {
     let cardStyle = {transform: [{translateX}, {translateY}, {rotate}, {scale}]};
 
     return (
-      <Animated.View style={[card.layout, {...cardStyle}]} {...this._panResponder.panHandlers}>
+      <Animated.View style={[styles.cardLayout, {...cardStyle}]} {...this._panResponder.panHandlers}>
         <Image source={this.props.src} />
-        <Text style={card.label}>{this.props.name}</Text>
+        <Text style={styles.cardLabel}>{this.props.name}</Text>
       </Animated.View>
     );
   }
