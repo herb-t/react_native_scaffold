@@ -13,7 +13,9 @@ import {
 } from 'react-native';
 import '../data.js';
 
-// Define Styles
+/**
+ * Stylesheet for label on cards.
+ */
 const styles = StyleSheet.create({
   label: {
     fontSize: 25,
@@ -23,12 +25,20 @@ const styles = StyleSheet.create({
   }
 });
 
-// Create Card class to handles swipe behavior and
-// to pass data through.
+/**
+ * Card Class to pass data through and handle swipe gestures and animations.
+ */
 export default class Card extends Component {
 
+  /**
+   * Define state and pass through props.
+   * @param  {!Object} props Props object to pass data through.
+   * @struct
+   */
   constructor(props) {
-    // Define state and pass through props.
+    // Define state and pass in props for component.
+    // State includes animated pan, scale and rotate values as
+    // well as a threshold value.
     super(props);
     this.state = {
       pan: new Animated.ValueXY(),
@@ -38,6 +48,10 @@ export default class Card extends Component {
     }
   }
 
+  /**
+   * Once the component is mounted, set up panResponder to
+   * track the current coordinates for touch.
+   */
   componentWillMount() {
     // Create pan responder to fire animations on
     // swipe left and right.
@@ -54,8 +68,13 @@ export default class Card extends Component {
     });
   }
 
+  /**
+   * Animate initial default values and set up
+   * scale animation for pan movement.
+   */
   animateAndSetPanValues_() {
     // Set the initial value to the current state
+    // and animate the card scale animation.
     this.state.pan.setOffset({x: this.state.pan.x._value, y: this.state.pan.y._value});
     this.state.pan.setValue({x: 0, y: 0});
     Animated.spring(
@@ -64,9 +83,16 @@ export default class Card extends Component {
     ).start();
   }
 
+  /**
+   * Fire animation according to x and y parameters given.
+   * @param  {!Number} x X position to animate to.
+   * @param  {!number} y Y position to animate to.
+   */
   animateRelease_(x, y) {
     // Flatten the offset to avoid erratic behavior
     this.state.pan.flattenOffset();
+
+    // Fire spring animations for the scale and pan.
     Animated.spring(
       this.state.scale,
       { toValue: 1, friction: 3 }
@@ -77,6 +103,10 @@ export default class Card extends Component {
     ).start();
   }
 
+  /**
+   * Fire release animations according to logic.
+   * @param  {!Number} pos Current position of pan.
+   */
   gaugeRelease_(pos) {
     // Gauge release movement threshold and animate accordingly.
     if(pos.dx <= this.state.threshold && pos.dx >= -this.state.threshold) {
@@ -88,20 +118,26 @@ export default class Card extends Component {
     }
   }
 
+  /**
+   * Render card component with animation and styles given.
+   */
   render() {
-    // Render card with animation styles and data hooked up.
+    // Define pan, scale and transform styles.
     let { pan, scale } = this.state;
     let [translateX, translateY] = [pan.x, pan.y];
 
+    // Define rotate values to switch dependent upon
+    // the curren pan.x position.
     const rotate = this.state.pan.x.interpolate({
       inputRange: [-this.state.threshold, 0, this.state.threshold],
       outputRange: ['-25deg', '0deg', '25deg']
     });
 
-    let imageStyle = {transform: [{translateX}, {translateY}, {rotate}, {scale}]};
+    // Define styles for card to pass in.
+    let cardStyle = {transform: [{translateX}, {translateY}, {rotate}, {scale}]};
 
     return (
-      <Animated.View style={{...this.props.style, ...imageStyle}} {...this._panResponder.panHandlers}>
+      <Animated.View style={{...this.props.style, ...cardStyle}} {...this._panResponder.panHandlers}>
         <Image source={this.props.src} />
         <Text style={styles.label}>{this.props.name}</Text>
       </Animated.View>
