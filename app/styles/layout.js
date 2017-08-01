@@ -7,7 +7,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     padding: 60
   },
-  cardLayout: {
+  layout: {
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',

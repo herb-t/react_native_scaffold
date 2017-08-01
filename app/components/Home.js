@@ -43,7 +43,18 @@ export default class Home extends Component {
         key={data.id}
         name={data.name}
         src={data.src}
-        style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', width: 350, height: 350, backgroundColor: '#efefef'}}
+        style={
+          {
+            position: 'absolute',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: 350,
+            height: 350,
+            backgroundColor: '#fff',
+            borderRadius: 6,
+            elevation: 1
+          }
+        }
       />
     );
 

@@ -10,9 +10,9 @@ export default StyleSheet.create({
     backgroundColor: '#efefef'
   },
   label: {
-    fontSize: 25,
+    fontSize: 24,
     color: '#000',
     textAlign: 'center',
-    marginTop: 25
+    lineHeight: 48
   }
 });
