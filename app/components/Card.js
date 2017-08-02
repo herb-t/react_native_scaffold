@@ -31,7 +31,7 @@ export default class Card extends Component {
       pan: new Animated.ValueXY(),
       scale: new Animated.Value(1),
       rotate: new Animated.Value(0.5),
-      threshold: 120
+      threshold: 125
     }
   }
 
@@ -46,13 +46,48 @@ export default class Card extends Component {
       onMoveShouldSetResponderCapture: () => true,
       onMoveShouldSetPanResponderCapture: () => true,
       onPanResponderGrant: (e, gestureState) => this.animateAndSetPanValues_(),
-      onPanResponderMove: Animated.event([
-        // When we drag/pan the object,
-        // set the delate to the states pan position.
-        null, {dx: this.state.pan.x, dy: this.state.pan.y},
-      ]),
+      onPanResponderMove: (e, gestureState) => {
+        Animated.event([
+          // When we drag/pan the object,
+          // set the delate to the states pan position.
+          null, {dx: this.state.pan.x, dy: this.state.pan.y},
+        ])(e, gestureState);
+
+        // Define rotate values to switch dependent upon
+        // the current x position.
+        if(gestureState.dx > this.state.threshold &&
+          gestureState.y0 < 310) {
+          this.animateRotation_(1);
+        } else if(gestureState.dx > this.state.threshold &&
+          gestureState.y0 >= 310) {
+          this.animateRotation_(0);
+        } else if (gestureState.dx < -this.state.threshold &&
+          gestureState.y0 < 310) {
+          this.animateRotation_(0);
+        } else if (gestureState.dx < -this.state.threshold &&
+          gestureState.y0 >= 310) {
+          this.animateRotation_(1);
+        } else {
+          this.animateRotation_(0.5);
+        }
+      },
       onPanResponderRelease: (e, gestureState) => this.gaugeRelease_(gestureState)
     });
+  }
+
+  /**
+   * Fire animation for rotating the card.
+   * @param  {!Number} val Corresponding number value for animation.
+   */
+  animateRotation_(val) {
+    Animated.timing(
+      this.state.rotate,
+      {
+        toValue: val,
+        duration: 150,
+        easing: Easing.in
+      }
+    ).start();
   }
 
   /**
@@ -113,11 +148,11 @@ export default class Card extends Component {
     let { pan, scale } = this.state;
     let [translateX, translateY] = [pan.x, pan.y];
 
-    // Define rotate values to switch dependent upon
-    // the curren pan.x position.
-    const rotate = this.state.pan.x.interpolate({
-      inputRange: [-this.state.threshold, 0, this.state.threshold],
-      outputRange: ['-25deg', '0deg', '25deg']
+    // Switch rotation based on state rotate property.
+    const rotate = this.state.rotate.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: ['-25deg', '0deg', '25deg'],
+      extrapolate: 'clamp'
     });
 
     // Define styles for card to pass in.

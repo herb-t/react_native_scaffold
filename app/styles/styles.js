@@ -10,12 +10,12 @@ export default StyleSheet.create({
   buttonLayout: {
     backgroundColor: COLOR_TERTIARY,
     borderWidth: 10,
-    borderRadius: 20,
+    borderRadius: 15,
     borderColor: COLOR_TERTIARY,
-    padding: 5
+    padding: 10
   },
   buttonText: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: 'bold',
     color: COLOR_PRIMARY
   },
