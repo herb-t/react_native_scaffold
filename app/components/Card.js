@@ -32,7 +32,7 @@ export default class Card extends Component {
       pan: new Animated.ValueXY(),
       scale: new Animated.Value(1),
       rotate: new Animated.Value(0.5),
-      threshold: 125,
+      threshold: 115,
       middle: 0
     }
   }
