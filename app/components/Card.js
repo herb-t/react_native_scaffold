@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import {
+  Dimensions,
   StyleSheet,
   Text,
   Image,
@@ -31,7 +32,8 @@ export default class Card extends Component {
       pan: new Animated.ValueXY(),
       scale: new Animated.Value(1),
       rotate: new Animated.Value(0.5),
-      threshold: 125
+      threshold: 125,
+      middle: 0
     }
   }
 
@@ -40,6 +42,10 @@ export default class Card extends Component {
    * track the current coordinates for touch.
    */
   componentWillMount() {
+    // Define height of window and
+    let { height } = Dimensions.get('window');
+    this.setState({middle: height/2});
+
     // Create pan responder to fire animations on
     // swipe left and right.
     this._panResponder = PanResponder.create({
@@ -47,25 +53,25 @@ export default class Card extends Component {
       onMoveShouldSetPanResponderCapture: () => true,
       onPanResponderGrant: (e, gestureState) => this.animateAndSetPanValues_(),
       onPanResponderMove: (e, gestureState) => {
-        Animated.event([
-          // When we drag/pan the object,
-          // set the delate to the states pan position.
-          null, {dx: this.state.pan.x, dy: this.state.pan.y},
+        // When we drag/pan the object,
+        // set the delate to the states pan position.
+        Animated.event([null,
+          {dx: this.state.pan.x, dy: this.state.pan.y}
         ])(e, gestureState);
 
         // Define rotate values to switch dependent upon
         // the current x position.
         if(gestureState.dx > this.state.threshold &&
-          gestureState.y0 < 310) {
+          gestureState.y0 < this.state.middle) {
           this.animateRotation_(1);
         } else if(gestureState.dx > this.state.threshold &&
-          gestureState.y0 >= 310) {
+          gestureState.y0 >= this.state.middle) {
           this.animateRotation_(0);
         } else if (gestureState.dx < -this.state.threshold &&
-          gestureState.y0 < 310) {
+          gestureState.y0 < this.state.middle) {
           this.animateRotation_(0);
         } else if (gestureState.dx < -this.state.threshold &&
-          gestureState.y0 >= 310) {
+          gestureState.y0 >= this.state.middle) {
           this.animateRotation_(1);
         } else {
           this.animateRotation_(0.5);
