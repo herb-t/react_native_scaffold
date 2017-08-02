@@ -84,8 +84,8 @@ export default class Card extends Component {
       this.state.rotate,
       {
         toValue: val,
-        duration: 150,
-        easing: Easing.in
+        easing: Easing.elastic(2),
+        duration: 130,
       }
     ).start();
   }
@@ -97,8 +97,12 @@ export default class Card extends Component {
   animateAndSetPanValues_() {
     // Set the initial value to the current state
     // and animate the card scale animation.
-    this.state.pan.setOffset({x: this.state.pan.x._value, y: this.state.pan.y._value});
-    this.state.pan.setValue({x: 0, y: 0});
+    this.state.pan.setOffset(
+      {x: this.state.pan.x._value, y: this.state.pan.y._value}
+    );
+    this.state.pan.setValue(
+      {x: 0,y: 0}
+    );
     Animated.spring(
       this.state.scale,
       { toValue: 1.1, friction: 3 }
