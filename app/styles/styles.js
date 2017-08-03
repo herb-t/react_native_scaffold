@@ -23,8 +23,9 @@ export default StyleSheet.create({
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 350,
-    height: 350,
+    width: 335,
+    height: 335,
+    padding: 20,
     backgroundColor: COLOR_PRIMARY,
     borderRadius: BORDER_RADIUS,
     elevation: 1
@@ -33,7 +34,7 @@ export default StyleSheet.create({
     fontSize: 24,
     color: COLOR_SECONDARY,
     textAlign: 'center',
-    lineHeight: 48
+    lineHeight: 36
   },
   appWrapper: {
     flex: 1,

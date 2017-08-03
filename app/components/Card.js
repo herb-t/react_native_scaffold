@@ -32,7 +32,7 @@ export default class Card extends Component {
       pan: new Animated.ValueXY(),
       scale: new Animated.Value(1),
       rotate: new Animated.Value(0.5),
-      threshold: 115,
+      threshold: 0,
       middle: 0
     }
   }
@@ -42,9 +42,10 @@ export default class Card extends Component {
    * track the current coordinates for touch.
    */
   componentWillMount() {
-    // Define height of window and
-    let { height } = Dimensions.get('window');
-    this.setState({middle: height/2});
+    // Define height and width of window.
+    // Assign threshold and middle values.
+    let { height, width } = Dimensions.get('window');
+    this.setState({threshold: width/4, middle: height/2});
 
     // Create pan responder to fire animations on
     // swipe left and right.
