@@ -28,13 +28,13 @@ export default class Card extends Component {
     // Pass through props.
     super(props);
 
-    // Define state with animated values and default thresholds.
+    // Define state with animated values and window dimension defaults.
     this.state = {
       pan: new Animated.ValueXY(),
       scale: new Animated.Value(1),
       rotate: new Animated.Value(0.5),
-      xThresh: 0,
-      yThresh: 0
+      width: 0,
+      height: 0
     }
   }
 
@@ -45,9 +45,9 @@ export default class Card extends Component {
    */
   componentWillMount() {
     // Define height and width of window.
-    // Assign xThresh and yThresh values.
+    // Assign xThresh, yThresh, width and height values.
     let { height, width } = Dimensions.get('window');
-    this.setState({xThresh: width/4, yThresh: height/2});
+    this.setState({width: width, height: height});
 
     // Create pan responder to fire animations on
     // swipe left and right.
@@ -62,11 +62,16 @@ export default class Card extends Component {
           {dx: this.state.pan.x, dy: this.state.pan.y}
         ])(e, gestureState);
 
-        // Define rotate values to switch dependent upon
-        // the current x position.
-        let { dx, y0 } = gestureState;
-        let { xThresh, yThresh } = this.state;
+        // Destructure width and height properties
+        const { width, height } = this.state;
 
+        // Define comparison parameters.
+        let xThresh = width / 4;
+        let yThresh = height / 2;
+        let { dx, y0 } = gestureState;
+
+        // Define rotate values to switch dependent upon
+        // the current x position and first y touchpoint.
         if(dx > xThresh && y0 < yThresh) {
           this.animateRotation_(1);
         } else if(dx > xThresh && y0 >= yThresh) {
@@ -144,19 +149,24 @@ export default class Card extends Component {
    * @private
    */
   gaugeRelease_(pos) {
-    // Define x threshold and current x position.
-    let { dx, y0 } = pos;
-    let { xThresh, yThresh } = this.state;
+    // Destructure width and height properties.
+    const { width, height } = this.state;
 
-    // Gauge release movement threshold and animate accordingly.
+    // Define comparison parameters.
+    let xThresh = width / 4;
+    let yThresh = height / 2;
+    let { dx, y0 } = pos;
+
+    // Gauge release values to animate dependent upon
+    // the current x position and first y touchpoint.
     if(dx > xThresh && y0 < yThresh) {
-      this.animateRelease_(500, 350);
+      this.animateRelease_(width, yThresh);
     } else if(dx > xThresh && y0 >= yThresh) {
-      this.animateRelease_(500, -350);
+      this.animateRelease_(width, -yThresh);
     } else if (dx < -xThresh && y0 < yThresh) {
-      this.animateRelease_(-500, 350);
+      this.animateRelease_(-width, yThresh);
     } else if (dx < -xThresh && y0 >= yThresh) {
-      this.animateRelease_(-500, -350);
+      this.animateRelease_(-width, -yThresh);
     } else {
       this.animateRelease_(0, 0);
     }
@@ -175,7 +185,7 @@ export default class Card extends Component {
     // based on the inputRange defined.
     const rotate = this.state.rotate.interpolate({
       inputRange: [0, 0.5, 1],
-      outputRange: ['-25deg', '0deg', '25deg'],
+      outputRange: ['-22deg', '0deg', '22deg'],
       extrapolate: 'clamp'
     });
 
