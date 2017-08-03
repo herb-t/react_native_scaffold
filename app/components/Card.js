@@ -64,18 +64,16 @@ export default class Card extends Component {
 
         // Define rotate values to switch dependent upon
         // the current x position.
-        let xVal = gestureState.dx;
-        let yVal = gestureState.y0;
-        let xThresh = this.state.xThresh;
-        let yThresh = this.state.yThresh;
+        let { dx, y0 } = gestureState;
+        let { xThresh, yThresh } = this.state;
 
-        if(xVal > xThresh && yVal < yThresh) {
+        if(dx > xThresh && y0 < yThresh) {
           this.animateRotation_(1);
-        } else if(xVal > xThresh && yVal >= yThresh) {
+        } else if(dx > xThresh && y0 >= yThresh) {
           this.animateRotation_(0);
-        } else if (xVal < -xThresh && yVal < yThresh) {
+        } else if (dx < -xThresh && y0 < yThresh) {
           this.animateRotation_(0);
-        } else if (xVal < -xThresh && yVal >= yThresh) {
+        } else if (dx < -xThresh && y0 >= yThresh) {
           this.animateRotation_(1);
         } else {
           this.animateRotation_(0.5);
@@ -147,16 +145,20 @@ export default class Card extends Component {
    */
   gaugeRelease_(pos) {
     // Define x threshold and current x position.
-    let x = pos.dx;
-    let xThresh = this.state.xThresh;
+    let { dx, y0 } = pos;
+    let { xThresh, yThresh } = this.state;
 
     // Gauge release movement threshold and animate accordingly.
-    if(x <= xThresh && x >= -xThresh) {
-      this.animateRelease_(0, 0);
-    } else if (x > xThresh) {
+    if(dx > xThresh && y0 < yThresh) {
       this.animateRelease_(500, 350);
-    } else if (x < -xThresh) {
+    } else if(dx > xThresh && y0 >= yThresh) {
+      this.animateRelease_(500, -350);
+    } else if (dx < -xThresh && y0 < yThresh) {
       this.animateRelease_(-500, 350);
+    } else if (dx < -xThresh && y0 >= yThresh) {
+      this.animateRelease_(-500, -350);
+    } else {
+      this.animateRelease_(0, 0);
     }
   }
 
