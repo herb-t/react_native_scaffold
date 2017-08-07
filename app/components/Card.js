@@ -62,29 +62,10 @@ export default class Card extends Component {
           {dx: this.state.pan.x, dy: this.state.pan.y}
         ])(e, gestureState);
 
-        // Destructure width and height properties
-        const { width, height } = this.state;
-
-        // Define comparison parameters.
-        let xThresh = width / 4;
-        let yThresh = height / 2;
-        let { dx, y0 } = gestureState;
-
-        // Define rotate values to switch dependent upon
-        // the current x position and first y touchpoint.
-        if(dx > xThresh && y0 < yThresh) {
-          this.animateRotation_(1);
-        } else if(dx > xThresh && y0 >= yThresh) {
-          this.animateRotation_(0);
-        } else if (dx < -xThresh && y0 < yThresh) {
-          this.animateRotation_(0);
-        } else if (dx < -xThresh && y0 >= yThresh) {
-          this.animateRotation_(1);
-        } else {
-          this.animateRotation_(0.5);
-        }
+        // Fire rotation animations according to position of swipe.
+        this.gaugeThreshold_(gestureState, 'rotate');
       },
-      onPanResponderRelease: (e, gestureState) => this.gaugeRelease_(gestureState)
+      onPanResponderRelease: (e, gestureState) => this.gaugeThreshold_(gestureState, 'release')
     });
   }
 
@@ -144,11 +125,12 @@ export default class Card extends Component {
   }
 
   /**
-   * Fire release animations according to logic.
+   * Fire release and rotate animations according to logic.
    * @param  {!Number} pos Current position of pan.
+   * @param {!String} label Label given to fire correct animation.
    * @private
    */
-  gaugeRelease_(pos) {
+  gaugeThreshold_(pos, label) {
     // Destructure width and height properties.
     const { width, height } = this.state;
 
@@ -160,15 +142,20 @@ export default class Card extends Component {
     // Gauge release values to animate dependent upon
     // the current x position and first y touchpoint.
     if(dx > xThresh && y0 < yThresh) {
-      this.animateRelease_(width, yThresh);
+      label === 'release' ? this.animateRelease_(width, yThresh) :
+      this.animateRotation_(1);
     } else if(dx > xThresh && y0 >= yThresh) {
-      this.animateRelease_(width, -yThresh);
+      label === 'release' ? this.animateRelease_(width, -yThresh) :
+      this.animateRotation_(0);
     } else if (dx < -xThresh && y0 < yThresh) {
-      this.animateRelease_(-width, yThresh);
+      label === 'release' ? this.animateRelease_(-width, yThresh) :
+      this.animateRotation_(0);
     } else if (dx < -xThresh && y0 >= yThresh) {
-      this.animateRelease_(-width, -yThresh);
+      label === 'release' ? this.animateRelease_(-width, -yThresh) :
+      this.animateRotation_(1);
     } else {
-      this.animateRelease_(0, 0);
+      label === 'release' ? this.animateRelease_(0, 0) :
+      this.animateRotation_(0.5);
     }
   }
 
